@@ -16,8 +16,14 @@
     "typescript": "^5.5.3"
   },
   "compilerOptions": {
-    "outDir": "./output",
-    "rootDir": "./src"
-  }
+    "target": "es6",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./output"
+  },
+  "include": ["src/**/*"]
   
 }
