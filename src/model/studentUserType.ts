@@ -1,15 +1,15 @@
-import { UserInterface } from '../interfaces/userInterface';	
+import { UserInterface } from "../interfaces/userInterface";
 import * as crypto from 'crypto';
 
-export class User implements UserInterface {
+class studentUser implements UserInterface {
     name: string;
     email: string;
     id: string;
     constructor(name: string, email: string) {
         this.name = name;
         this.email = email;
-        this.id = "usr-"+crypto.randomUUID();
+        this.id = "std-"+crypto.randomUUID();
     }
 }
 
-export default User;
+export default studentUser;
