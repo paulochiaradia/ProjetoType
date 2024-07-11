@@ -8,6 +8,7 @@ let user = new User('John Doe', "teste@gmail.com");
 let student = new studentUser('John Student', "teste@student.com"); 
 let teacher = new teacherUser('John Teacher', "teste@teacher.com");	
 
+
 userRepoTeste.add(user);
 userRepoTeste.add(student);
 userRepoTeste.add(teacher);

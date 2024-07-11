@@ -1,8 +1,6 @@
 import { BookInterface } from "../interfaces/bookInterface";
 import { CategoryInterface } from "../interfaces/categoryInterface";
 
-//book implements BookInterface with title, author, quantity, and category(categoryComposite/category)
-
 class Book implements BookInterface{
     private title: string;
     private author: string;
@@ -28,3 +26,5 @@ class Book implements BookInterface{
         return [this.category];
     }
 }
+
+export default Book;
