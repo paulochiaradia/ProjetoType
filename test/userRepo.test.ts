@@ -14,10 +14,10 @@ test('Test add method', () => {
     let user = new User('John Doe', "mail@teste.com");
     expect(userRepoTeste.add(user)).toBe(user.id);
 
-    let student = new studentUser('John Travolta', "mail@teste.com");
+    let student = new studentUser('John Travolta', "mail2@teste.com");
     expect(userRepoTeste.add(student)).toBe(student.id);
 
-    let teacher = new teacherUser('John Teacher', "mail@teste.com");
+    let teacher = new teacherUser('John Teacher', "mail3@teste.com");
     expect(userRepoTeste.add(teacher)).toBe(teacher.id);
 
     expect(userRepoTeste.list().length).toBe(3);
@@ -40,7 +40,7 @@ test('Test remove method', () => {
 test('Test list method', () => {
     let studente = new studentUser('John Doe', "mail@mail.com");
     userRepoTeste.add(studente);
-    let teacher = new teacherUser('John Teacher', "mail@gmail.com");
+    let teacher = new teacherUser('John Teacher', "mail2@gmail.com");
     userRepoTeste.add(teacher);
 
     expect(userRepoTeste.list().length).toBe(2);
