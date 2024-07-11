@@ -1,6 +1,6 @@
-import studentUser from "./model/studentUserType";
-import teacherUser from "./model/teacherUserType";
-import { User } from "./model/user";
+import studentUser from "./user/studentUserType";
+import teacherUser from "./user/teacherUserType";
+import { User } from "./user/user";
 import userRepo from "./repo/userRepo"; // Import the userRepo class
 
 let userRepoTeste = new userRepo();

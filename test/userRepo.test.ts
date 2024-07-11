@@ -1,8 +1,8 @@
 // test all methods in userRepo.ts
 
-import studentUser from "../src/model/studentUserType";
-import teacherUser from "../src/model/teacherUserType";
-import { User } from "../src/model/user";
+import studentUser from "../src/user/studentUserType";
+import teacherUser from "../src/user/teacherUserType";
+import { User } from "../src/user/user";
 import UserRepo from "../src/repo/userRepo";
 
 let userRepoTeste = new UserRepo();

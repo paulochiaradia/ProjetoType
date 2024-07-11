@@ -1,5 +1,5 @@
 import { UserRepoInterface } from "../interfaces/userRepoInterface";
-import User from "../model/user";
+import User from "../user/user";
 
 class UserRepo implements UserRepoInterface {
     users: User[] = [];

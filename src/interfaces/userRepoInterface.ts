@@ -1,4 +1,4 @@
-import User from "../model/user";
+import User from "../user/user";
 
 interface UserRepoInterface {
     find(email: string): User;
