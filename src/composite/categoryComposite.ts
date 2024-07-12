@@ -24,4 +24,14 @@ class compositeCategory implements CategoryInterface{
     getCategories(): CategoryInterface[] {
         return this.categories;
     }
+
+    toString(): string {
+        let result = this.name;
+        for (let category of this.categories) {
+            result += "->"+category.toString();
+        }
+        return result;
+    }
 }
+
+export default compositeCategory;

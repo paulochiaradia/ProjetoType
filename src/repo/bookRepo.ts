@@ -31,3 +31,5 @@ class bookRepo implements BookRepoInterface{
     }
 
 }
+
+export default bookRepo;

@@ -5,6 +5,7 @@ interface BookInterface {
     getAuthor(): string;
     getQuantity(): number;
     getCategory(): CategoryInterface[];
+    toString(): string;
 }
 
 export { BookInterface };

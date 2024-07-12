@@ -25,6 +25,15 @@ class Book implements BookInterface{
     getCategory(): CategoryInterface[]{
         return [this.category];
     }
+
+    toString(): string {
+        return `Book {
+          title: ${this.title},
+          author: ${this.author},
+          quantity: ${this.quantity},
+          category: ${this.category.toString()}
+        }`;
+}
 }
 
 export default Book;

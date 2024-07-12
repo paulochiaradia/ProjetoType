@@ -1,12 +1,31 @@
 "use strict";
-console.log('Hello World!');
-class Greeter {
-    constructor(message) {
-        this.greeting = message;
-    }
-    greet() {
-        return 'Hello, ' + this.greeting;
-    }
-}
-let greeter = new Greeter('world');
-console.log(greeter.greet());
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const bookRepo_1 = __importDefault(require("./repo/bookRepo"));
+const book_1 = __importDefault(require("./book/book"));
+const category_1 = __importDefault(require("./category/category"));
+const categoryComposite_1 = __importDefault(require("./composite/categoryComposite"));
+//let userRepoTeste = new userRepo();
+let bookRepoTeste = new bookRepo_1.default();
+let rootCategory;
+let rootCategory2;
+rootCategory = new categoryComposite_1.default("Conto de Fadas");
+rootCategory2 = new categoryComposite_1.default("Aventura");
+rootCategory.add(new category_1.default("Fantasia"));
+rootCategory.add(new category_1.default("Dinossauros"));
+let book = new book_1.default("Harry Potter", "J.K. Rowling", 2000, rootCategory);
+let book2 = new book_1.default("Jurassic Park", "Michael Crichton", 1990, rootCategory2);
+bookRepoTeste.add(book);
+bookRepoTeste.add(book2);
+console.log(bookRepoTeste.list());
+//userRepoTeste.add(user);
+//userRepoTeste.add(student);
+//userRepoTeste.add(teacher);
+//console.log(userRepoTeste.list());
+//userRepoTeste.remove(user.email);
+//userRepoTeste.remove(student.email);
+//userRepoTeste.remove(teacher.email);
+//console.log(userRepoTeste.list());
+//console.log(userRepoTeste.list().length);

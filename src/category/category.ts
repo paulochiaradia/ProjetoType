@@ -17,6 +17,9 @@ class category implements CategoryInterface{
     getCategories(): CategoryInterface[] {
         return [];
     }
+    toString(): string {
+        return this.name;
+    }
 }
 
 export default category;
