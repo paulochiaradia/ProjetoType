@@ -16,7 +16,7 @@ let rootCategory2: CategoryComposite;
 rootCategory = new CategoryComposite("Conto de Fadas");
 rootCategory2 = new CategoryComposite("Aventura");
 rootCategory.add(new Category("Fantasia"));
-rootCategory2.add(new Category("Dinossauros"));
+rootCategory.add(new Category("Dinossauros"));
 
 
 

@@ -6,7 +6,7 @@ class Book implements BookInterface{
     private author: string;
     private quantity: number;
     private category: CategoryInterface;
-    
+
     constructor(title: string, author: string, quantity: number, category: CategoryInterface){
         this.title = title;
         this.author = author;   
