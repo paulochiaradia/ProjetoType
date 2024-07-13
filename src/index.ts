@@ -6,9 +6,21 @@ import bookRepo from "./repo/bookRepo";
 import Book from "./book/book";
 import Category from "./category/category";
 import CategoryComposite from "./composite/categoryComposite";
+import ExternalCatalogAdapter from "./adapter/catalogExternalAdapter";
 
 //let userRepoTeste = new userRepo();
 let bookRepoTeste = new bookRepo();
+
+const mockExternalCatalogService = {
+    getBooks: () => [
+      { title: "External Book 1", author: "External Author 1", quantity: 10, category: "Sci-Fi" },
+      { title: "External Book 2", author: "External Author 2", quantity: 5, category: "Fantasy" }
+    ]
+  };
+
+let externalAdapter = new ExternalCatalogAdapter(mockExternalCatalogService);
+let externalBooks = externalAdapter.fetchBooks();
+externalBooks.forEach(book => bookRepoTeste.add(book));
 
 let rootCategory: CategoryComposite;
 let rootCategory2: CategoryComposite;
