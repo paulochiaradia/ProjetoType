@@ -1,4 +1,9 @@
 import Book from "../book/book";
+import BookAvailabilityHandler from "../handlers/bookAvailabilityHandler";
+import LoanLimitHandler from "../handlers/loanLimitHandler";
+import UserEligibilityHandler from "../handlers/userEligibilityHandler";
+import { EligibilityCheckerInterface } from "../interfaces/eligibilityCheckerInterface";
+import { LoanLimitCalculatorInterface } from "../interfaces/loanLimitCalculatorInterface";
 import LoanRepo from "../interfaces/loanRepoInterface";
 import LoanServiceInterface from "../interfaces/loanServiceInterface";
 import Loan from "../loan/loan";
@@ -6,26 +11,62 @@ import User from "../user/user";
 
 class LoanService implements LoanServiceInterface {
   private loanRepository: LoanRepo;
+  private approvalChain: BookAvailabilityHandler | undefined;
 
   constructor(loanRepository: LoanRepo) {
     this.loanRepository = loanRepository;
+    this.setupApprovalChain();
   }
 
+  setupApprovalChain(): void {
+    const studentEligibilityChecker: EligibilityCheckerInterface = {
+      isEligible: (user: User) => user.id.substring(0, 3) === "std",
+    };
+    const teacherEligibilityChecker: EligibilityCheckerInterface = {
+      isEligible: (user: User) => user.id.substring(0, 3) === "tch",
+    };
+    const userEligibilityChecker: EligibilityCheckerInterface = {
+      isEligible: (user: User) => user.id.substring(0, 3) === "usr"
+    };
+
+    const userEligibilityHandler = new UserEligibilityHandler(
+      studentEligibilityChecker,
+      teacherEligibilityChecker,
+      userEligibilityChecker
+    );
+
+    const loanLimitCalculator: LoanLimitCalculatorInterface = {
+      getLoanLimit: (user: User) => {
+        if (user.id.substring(0, 3) === "std") {
+          return 2;
+        } else if (user.id.substring(0, 3) === "tch") {
+          return 5;
+        } else {
+          return 1;
+        }
+      }
+
+    };
+
+    const loanLimitHandler = new LoanLimitHandler(this.loanRepository, loanLimitCalculator);
+
+    const bookAvailabilityHandler = new BookAvailabilityHandler();
+    bookAvailabilityHandler.setNext(userEligibilityHandler).setNext(loanLimitHandler);
+    this.approvalChain = bookAvailabilityHandler;
+
+
+  }
+  
   loanBook(book: Book, user: User): string {
-    if (book.quantity < 1) {
-      return `Book ${book.getTitle()} is not available for loan.`;
+    if (!this.approvalChain) {
+      return `Loan approval chain not set up.`;
     }
 
-    const existingLoan = this.loanRepository.findLoan(book, user);
-    if (existingLoan) {
-      return `User ${user.name} has already borrowed the book ${book.getTitle()}.`;
-    }
+    return this.approvalChain.handle(book, user);
 
-    book.decrementQuantity();
-    const loan = new Loan(book, user);
-    this.loanRepository.add(loan);
-    return `Book ${book.getTitle()} successfully loaned to user ${user.name}.`;
   }
+
+
 
   returnBook(book: Book, user: User): string {
     const existingLoan = this.loanRepository.findLoan(book, user);
@@ -34,6 +75,7 @@ class LoanService implements LoanServiceInterface {
     }
 
     book.incrementQuantity();
+
     return `Book ${book.getTitle()} successfully returned by user ${user.name}.`;
   }
 

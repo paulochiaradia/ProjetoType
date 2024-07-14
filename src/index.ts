@@ -9,6 +9,10 @@ import CategoryComposite from "./composite/categoryComposite";
 import ExternalCatalogAdapter from "./adapter/catalogExternalAdapter";
 import LoanService from "./service/loanService";
 import LoanRepo from "./repo/loanRepo";
+import UserEligibilityHandler from "./handlers/userEligibilityHandler";
+import StudentEligibilityChecker from "./checkers/studentEligibilityChecker";
+import StudentLoanLimitCalculator from "./checkers/studentLoanLimitCalculator";
+import LoanLimitHandler from "./handlers/loanLimitHandler";
 
 
 let bookRepoTeste = new bookRepo();
@@ -50,24 +54,13 @@ let book2 = new Book("Jurassic Park", "Michael Crichton", 1990, rootCategory2);
 
 bookRepoTeste.add(book);
 bookRepoTeste.add(book2);
-bookRepoTeste.list().forEach(book => console.log(book.toString()));
-console.log(rootCategory.toString());
 
+// Serviço de Empréstimo
 let loanService = new LoanService(loanRepoTeste);
 
 // Realizando empréstimos
 console.log(loanService.loanBook(book, student));
-console.log(loanService.loanBook(book, teacher)); // Deve falhar, pois o livro já foi emprestado ao aluno
 console.log(loanService.loanBook(book2, teacher));
 
-// Listando empréstimos
-loanService.listLoans().forEach(loan => console.log(loan.toString()));
-
-// Devolvendo livros
-console.log(loanService.returnBook(book, student));
-console.log(loanService.returnBook(book, teacher)); // Deve falhar, pois o livro não foi emprestado ao professor
-console.log(loanService.returnBook(book2, teacher));
-
-// Listando empréstimos após devolução
-loanService.listLoans().forEach(loan => console.log(loan.toString()));
-
+//impriindo os livros emprestados
+console.log(loanService.listLoans());
