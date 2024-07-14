@@ -7,9 +7,22 @@ import Book from "./book/book";
 import Category from "./category/category";
 import CategoryComposite from "./composite/categoryComposite";
 import ExternalCatalogAdapter from "./adapter/catalogExternalAdapter";
+import LoanService from "./service/loanService";
+import LoanRepo from "./repo/loanRepo";
 
-//let userRepoTeste = new userRepo();
+
 let bookRepoTeste = new bookRepo();
+let loanRepoTeste = new LoanRepo();
+let userRepoTeste = new userRepo();
+
+
+let user = new User("João", "teste@gmail.com")
+let student = new studentUser("Maria", "student@gmail.com", );
+let teacher = new teacherUser("Carlos", "teacher@gmail.com");
+
+userRepoTeste.add(user);
+userRepoTeste.add(student);
+userRepoTeste.add(teacher);
 
 const mockExternalCatalogService = {
     getBooks: () => [
@@ -40,13 +53,21 @@ bookRepoTeste.add(book2);
 bookRepoTeste.list().forEach(book => console.log(book.toString()));
 console.log(rootCategory.toString());
 
+let loanService = new LoanService(loanRepoTeste);
 
-//userRepoTeste.add(user);
-//userRepoTeste.add(student);
-//userRepoTeste.add(teacher);
-//console.log(userRepoTeste.list());
-//userRepoTeste.remove(user.email);
-//userRepoTeste.remove(student.email);
-//userRepoTeste.remove(teacher.email);
-//console.log(userRepoTeste.list());
-//console.log(userRepoTeste.list().length);
+// Realizando empréstimos
+console.log(loanService.loanBook(book, student));
+console.log(loanService.loanBook(book, teacher)); // Deve falhar, pois o livro já foi emprestado ao aluno
+console.log(loanService.loanBook(book2, teacher));
+
+// Listando empréstimos
+loanService.listLoans().forEach(loan => console.log(loan.toString()));
+
+// Devolvendo livros
+console.log(loanService.returnBook(book, student));
+console.log(loanService.returnBook(book, teacher)); // Deve falhar, pois o livro não foi emprestado ao professor
+console.log(loanService.returnBook(book2, teacher));
+
+// Listando empréstimos após devolução
+loanService.listLoans().forEach(loan => console.log(loan.toString()));
+

@@ -4,7 +4,7 @@ import { CategoryInterface } from "../interfaces/categoryInterface";
 class Book implements BookInterface{
     private title: string;
     private author: string;
-    private quantity: number;
+    quantity: number;
     private category: CategoryInterface;
 
     constructor(title: string, author: string, quantity: number, category: CategoryInterface){
@@ -25,6 +25,21 @@ class Book implements BookInterface{
     getCategory(): CategoryInterface[]{
         return [this.category];
     }
+
+    isAvailable(): boolean {
+        return this.quantity > 0;
+      }
+    
+      decrementQuantity(): void {
+        if (this.isAvailable()) {
+          this.quantity -= 1;
+        }
+      }
+    
+      incrementQuantity(): void {
+        this.quantity += 1;
+      }
+    
 
     toString(): string {
         return `Book {
