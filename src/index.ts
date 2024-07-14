@@ -9,11 +9,6 @@ import CategoryComposite from "./composite/categoryComposite";
 import ExternalCatalogAdapter from "./adapter/catalogExternalAdapter";
 import LoanService from "./service/loanService";
 import LoanRepo from "./repo/loanRepo";
-import UserEligibilityHandler from "./handlers/userEligibilityHandler";
-import StudentEligibilityChecker from "./checkers/studentEligibilityChecker";
-import StudentLoanLimitCalculator from "./checkers/studentLoanLimitCalculator";
-import LoanLimitHandler from "./handlers/loanLimitHandler";
-
 
 let bookRepoTeste = new bookRepo();
 let loanRepoTeste = new LoanRepo();

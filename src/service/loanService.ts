@@ -61,6 +61,9 @@ class LoanService implements LoanServiceInterface {
     if (!this.approvalChain) {
       return `Loan approval chain not set up.`;
     }
+    //adicionar o registro de emprestimo no repositorio de emprestimos
+    const loan = new Loan(book, user);
+    this.loanRepository.add(loan);
 
     return this.approvalChain.handle(book, user);
 
