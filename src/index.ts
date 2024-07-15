@@ -8,10 +8,12 @@ import Book from "./book/book";
 import Category from "./category/category";
 import CategoryComposite from "./composite/categoryComposite";
 import ExternalCatalogAdapter from "./adapter/catalogExternalAdapter";
-import LoanService from "./service/loanService";
 import LoanRepo from "./repo/loanRepo";
 import { configurationManager } from './managers/ConfigurationManager';
 
+// ALUNOS:
+// Paulo Roberto Chiaradia Neto - 156658
+// Vinícius da Silva Dias - 156736
 
 // set all the the repos and facade onto configuration manager
 configurationManager.getInstance().setConfiguration({
