@@ -1,3 +1,4 @@
+import { BookAvaiablityNotifier } from './../notifiers/BookAvailabilityNotifier';
 import Book from "../book/book";
 import BookAvailabilityHandler from "../handlers/bookAvailabilityHandler";
 import LoanLimitHandler from "../handlers/loanLimitHandler";
@@ -12,6 +13,7 @@ import User from "../user/user";
 class LoanService implements LoanServiceInterface {
   private loanRepository: LoanRepo;
   private approvalChain: BookAvailabilityHandler | undefined;
+  private bookAvaiablityNotifier: BookAvaiablityNotifier = new BookAvaiablityNotifier();
 
   constructor(loanRepository: LoanRepo) {
     this.loanRepository = loanRepository;
@@ -78,6 +80,8 @@ class LoanService implements LoanServiceInterface {
     }
 
     book.incrementQuantity();
+
+    this.bookAvaiablityNotifier.notify(book, user);
 
     return `Book ${book.getTitle()} successfully returned by user ${user.name}.`;
   }

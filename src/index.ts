@@ -1,3 +1,4 @@
+import { LibraryFacade } from './facade/LibraryFacade';
 import studentUser from "./user/studentUserType";
 import teacherUser from "./user/teacherUserType";
 import { User } from "./user/user";
@@ -9,19 +10,28 @@ import CategoryComposite from "./composite/categoryComposite";
 import ExternalCatalogAdapter from "./adapter/catalogExternalAdapter";
 import LoanService from "./service/loanService";
 import LoanRepo from "./repo/loanRepo";
+import { configurationManager } from './managers/ConfigurationManager';
 
-let bookRepoTeste = new bookRepo();
-let loanRepoTeste = new LoanRepo();
-let userRepoTeste = new userRepo();
+
+// set all the the repos and facade onto configuration manager
+configurationManager.getInstance().setConfiguration({
+  loanRepo: new LoanRepo(),
+  bookRepo: new bookRepo(),
+  userRepo: new userRepo(),
+});
+
+const config = configurationManager.getInstance().getConfiguration();
+
+let LibraryFacadeTeste = new LibraryFacade(config.loanRepo, config.bookRepo);
 
 
 let user = new User("João", "teste@gmail.com")
 let student = new studentUser("Maria", "student@gmail.com", );
 let teacher = new teacherUser("Carlos", "teacher@gmail.com");
 
-userRepoTeste.add(user);
-userRepoTeste.add(student);
-userRepoTeste.add(teacher);
+config.userRepo.add(user);
+config.userRepo.add(student);
+config.userRepo.add(teacher);
 
 const mockExternalCatalogService = {
     getBooks: () => [
@@ -32,7 +42,7 @@ const mockExternalCatalogService = {
 
 let externalAdapter = new ExternalCatalogAdapter(mockExternalCatalogService);
 let externalBooks = externalAdapter.fetchBooks();
-externalBooks.forEach(book => bookRepoTeste.add(book));
+externalBooks.forEach(book => config.bookRepo.add(book));
 
 let rootCategory: CategoryComposite;
 let rootCategory2: CategoryComposite;
@@ -47,15 +57,12 @@ rootCategory.add(new Category("Dinossauros"));
 let book = new Book("Harry Potter", "J.K. Rowling", 2000, rootCategory);
 let book2 = new Book("Jurassic Park", "Michael Crichton", 1990, rootCategory2);
 
-bookRepoTeste.add(book);
-bookRepoTeste.add(book2);
-
-// Serviço de Empréstimo
-let loanService = new LoanService(loanRepoTeste);
+config.bookRepo.add(book);
+config.bookRepo.add(book2);
 
 // Realizando empréstimos
-console.log(loanService.loanBook(book, student));
-console.log(loanService.loanBook(book2, teacher));
+console.log(LibraryFacadeTeste.loanBook(book, student));
+console.log(LibraryFacadeTeste.loanBook(book2, teacher));
 
 //impriindo os livros emprestados
-console.log(loanService.listLoans());
+console.log(LibraryFacadeTeste.listLoans());

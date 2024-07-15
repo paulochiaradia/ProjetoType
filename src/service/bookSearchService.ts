@@ -3,10 +3,10 @@
 
 import { BookInterface } from "../interfaces/bookInterface";
 import { BookRepoInterface } from "../interfaces/bookRepoInterface";
+import { BookSearchServiceInterface } from "../interfaces/bookSearchServiceInterface";
 
-class bookSearchService {
+class bookSearchService implements BookSearchServiceInterface {
     private bookRepo: BookRepoInterface;
-
 
     constructor(bookRepo: BookRepoInterface) {
         this.bookRepo = bookRepo;
@@ -28,3 +28,5 @@ class bookSearchService {
         return this.bookRepo.list().filter(book => book.getQuantity() === quantity);
     }
 }
+
+export default bookSearchService;
